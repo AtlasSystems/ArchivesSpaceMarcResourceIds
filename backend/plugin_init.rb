@@ -24,8 +24,14 @@ MARCModel.class_eval do
 			return
 		end
 
+		# Set Control Number
 		idFromUri = uri.split('/')[-1]
 		df('035', ' ', ' ').with_sfs(['a', AppConfig[:marc_control_number_prefix] + idFromUri])
+
+		# Add resource link
+		df('856', '4', '2').with_sfs(
+						['3', "ArchivesSpace Record"],
+						['u', File.join(AppConfig[:public_proxy_url], uri).to_s])
 	end
 
 end
